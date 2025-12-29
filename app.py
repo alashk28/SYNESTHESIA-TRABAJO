@@ -327,4 +327,59 @@ def get_audio_analysis(sp):
         
         return simulated_scores, est
 
+# --- 6. RUTAS ---
+
+@app.route('/')
+def index():
+    return render_template('index.html', logged_in=False, mood_name="Login", mood_scores={}, audio_analysis={}, movie_recommendations={}, top_genres=[], user_name="")
+
+@app.route('/login')
+def login():
+    handler = FlaskSessionCacheHandler(session)
+    # USAMOS LA VARIABLE SCOPE GLOBAL QUE DEFINIMOS ARRIBA
+    sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI, scope=SCOPE, cache_handler=handler, show_dialog=True)
+    return redirect(sp_oauth.get_authorize_url())
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+@app.route('/callback')
+def callback():
+    try:
+        handler = FlaskSessionCacheHandler(session)
+        # USAMOS EL MISMO SCOPE AQUI TAMBIEN
+        sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI, scope=SCOPE, cache_handler=handler)
+        
+        code = request.args.get('code')
+        if not code: return "Error: Sin código"
+
+        sp_oauth.get_access_token(code)
+        if not sp_oauth.validate_token(handler.get_cached_token()):
+             return "Error: Token inválido"
+
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        user = sp.current_user()
+        
+        top_genres = get_top_genres(sp)
+        movie_recommendations = get_movie_recommendations(top_genres)
+        
+        # Intentamos obtener audio. Si falla (dará error en log), devolverá {} pero la app funcionará.
+        mood_scores, audio_analysis = get_audio_analysis(sp)
+        
+        mood_name = "Oyente Equilibrado"
+        if mood_scores.get('Energía', 0) > 75: mood_name = "Explosión de Energía"
+        elif mood_scores.get('Positividad', 0) < 30: mood_name = "Melancolía Profunda"
+        elif mood_scores.get('Positividad', 0) > 80: mood_name = "Euforia Total"
+        
+        return render_template('index.html', logged_in=True, mood_name=mood_name, mood_scores=mood_scores, audio_analysis=audio_analysis, movie_recommendations=movie_recommendations, top_genres=top_genres, user_name=user['display_name'])
+
+    except Exception as e:
+        logger.error(f"ERROR FATAL: {e}")
+        return f"""<div style='color:red;'><h2>Error:</h2>{e}<br><a href='/logout'>Logout y reintentar</a></div>"""
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
