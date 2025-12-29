@@ -27,3 +27,6 @@ if not all([SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI, TMDB
 
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'clave_super_secreta_anti_logout')
 
+# --- 3. SCOPE (PERMISOS) AMPLITADO ---
+SCOPE = 'user-top-read user-read-private'
+
