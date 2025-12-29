@@ -11,7 +11,7 @@ Este proyecto es una plataforma web desarrollada en Python con el framework Flas
 | Palma Cruz Yasmin | 20231504
 
 **Institución:** Universidad Nacional Agraria la Molina  
-**Docente:** Lenguaje de Programación 2  
+**Curso:** Lenguaje de Programación 2  
 **Profesor:** Ana Vargas  
 **Fecha de entrega:** Lunes 29 de Diciembre del 2025  
 
@@ -52,6 +52,7 @@ El proyecto sigue una arquitectura de aplicación web moderna y escalable.
 | **Procfile** | Configuración de procesos para el despliegue en la nube (Gunicorn). |
 | **requirements.txt** | Listado de librerías necesarias para la ejecución del entorno (flask, spotipy, python-dotenv, gunicorn, requests). |
 | **.gitignore** | Protección de archivos de caché y variables de entorno .env. |
+| **.env** | (Ignorado por seguridad) Archivo local que almacena las credenciales privadas de las APIs. |
 
 ## 🚀 Instalación y Uso Local
 1. **Clonar repositorio:** git clone https://github.com/alashk28/SYNESTHESIA-TRABAJO.git
