@@ -42,7 +42,16 @@ La información descargada se organiza bajo una estructura lógica que permite s
 - **Interfaz dinámica:** Los resultados se estructuran en el frontend usando Jinja2 y Tailwind CSS, presentando métricas
   visuales y tarjetas de recomendación interactivas.
   
+## 📂 Estructura del Repositorio 
+El proyecto sigue una arquitectura de aplicación web moderna y escalable.
 
+| Carpeta / Archivo | Función Técnica |
+|-------------------|-------------|
+| **templates/index.html** | Interfaz de usuario con renderizado dinámico de datos. Contiene el archivo HTML (index.html) procesado con Jinja2. |
+| **app.py** | El núcleo de la aplicación, la lógica central. Maneja rutas (OAuth), lógica de APIs y el algoritmo de mapeo. |
+| **Procfile** | Configuración de procesos para el despliegue en la nube (Gunicorn). |
+| **requirements.txt** | Listado de librerías necesarias para la ejecución del entorno (flask, spotipy, python-dotenv, gunicorn, requests). |
+| **.gitignore** | Protección de archivos de caché y variables de entorno .env. |
 
 
 
