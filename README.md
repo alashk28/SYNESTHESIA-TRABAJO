@@ -33,6 +33,15 @@ El sistema integra dos fuentes de datos externas mediante el consumo de APIs ofi
    - **Enriquecimiento de datos:** Por cada título, se descarga automáticamente el director, el reparto principal, la
      sinopsis y la calificación crítica.
 
+## Estructura y Resumen de la Información
+La información descargada se organiza bajo una estructura lógica que permite su análisis posterior:
+- **Mapeo de Datos (Cross-Platform)**: Se utiliza un diccionario técnico (GENRE_MAPPING) que vincula IDs de música con IDs
+  de cine (ej: Jazz -> Crimen/Noir/Historia).
+- **Clasificación de perfiles:**
+  Los datos se resumen en categorías emocionales como "Euforia Total", "Melancolía Profunda" o "Oyente Equilibrado".
+- **Interfaz dinámica:** Los resultados se estructuran en el frontend usando Jinja2 y Tailwind CSS, presentando métricas
+  visuales y tarjetas de recomendación interactivas.
+  
 
 
 
